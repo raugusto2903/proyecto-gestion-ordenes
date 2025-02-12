@@ -1,0 +1,36 @@
+name: CI/CD Spring Boot
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔹 Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: ☕ Configurar JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: ⚙️ Construir el proyecto con Maven
+        run: mvn clean package -DskipTests
+
+      - name: ✅ Ejecutar pruebas
+        run: mvn test
+
+      - name: 📦 Guardar el artefacto
+        uses: actions/upload-artifact@v3
+        with:
+          name: springboot-app
+          path: target/*.jar
