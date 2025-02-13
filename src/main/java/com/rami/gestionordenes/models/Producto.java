@@ -1,5 +1,6 @@
 package com.rami.gestionordenes.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,7 @@ public class Producto {
     @Column(nullable = false)
     private Boolean activo = true; // Indica si el producto está disponible
 
+    @JsonIgnore
     @OneToOne(mappedBy = "producto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Inventario inventario; // Relación 1:1 con Inventario
 }

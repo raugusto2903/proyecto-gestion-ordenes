@@ -16,7 +16,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan({
         "com.rami.gestionordenes.services",
         "com.rami.gestionordenes.controllers",
-        "com.rami.gestionordenes.configuration"
+        "com.rami.gestionordenes.configuration",
+        "com.rami.gestionordenes.repositories"
 })
 public class GestionOrdenesApplication {
 
