@@ -19,9 +19,8 @@ public class Orden {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario; // Relación con Usuario
 
-    @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DetalleOrden> detalles;
-
     @Column(nullable = false)
     private Double total;
 
