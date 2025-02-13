@@ -5,7 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
-
+@Getter
+@Setter
 @Entity
 @Table(name = "usuario")
 public class Usuario {
@@ -26,8 +27,7 @@ public class Usuario {
     private Boolean enabled;
 
     @Column(nullable = false)
-    @Getter
-    @Setter
+
     private Boolean isAdmin = false;
     @Column(name = "created_at", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
