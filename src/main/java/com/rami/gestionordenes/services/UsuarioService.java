@@ -1,16 +1,22 @@
 package com.rami.gestionordenes.services;
 
 import com.rami.gestionordenes.models.Usuario;
+import com.rami.gestionordenes.models.viewmodels.ClienteFrecuenteDTO;
+import com.rami.gestionordenes.repositories.OrdenRepository;
 import com.rami.gestionordenes.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private OrdenRepository ordenRepository;
 
     public List<Usuario> listarUsuarios() {
         return usuarioRepository.findAll();
@@ -37,4 +43,14 @@ public class UsuarioService {
     public void eliminarUsuario(Long id) {
         usuarioRepository.deleteById(id);
     }
+
+    public List<ClienteFrecuenteDTO> obtenerClientesFrecuentes() {
+        List<Object[]> resultados = ordenRepository.findTopFrequentCustomers();
+
+        return resultados.stream().map(obj -> new ClienteFrecuenteDTO(
+                (Usuario) obj[0],  // Usuario
+                ((Number) obj[1]).intValue()  // Cantidad de órdenes
+        )).collect(Collectors.toList());
+    }
+
 }

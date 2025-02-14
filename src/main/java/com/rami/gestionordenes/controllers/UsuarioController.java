@@ -1,6 +1,7 @@
 package com.rami.gestionordenes.controllers;
 
 import com.rami.gestionordenes.models.Usuario;
+import com.rami.gestionordenes.models.viewmodels.ClienteFrecuenteDTO;
 import com.rami.gestionordenes.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,5 +46,11 @@ public class UsuarioController {
     public ResponseEntity<Void> eliminarUsuario(@PathVariable Long id) {
         usuarioService.eliminarUsuario(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/frecuentes")
+    public ResponseEntity<List<ClienteFrecuenteDTO>> obtenerClientesFrecuentes() {
+        List<ClienteFrecuenteDTO> clientesFrecuentes = usuarioService.obtenerClientesFrecuentes();
+        return ResponseEntity.ok(clientesFrecuentes);
     }
 }
