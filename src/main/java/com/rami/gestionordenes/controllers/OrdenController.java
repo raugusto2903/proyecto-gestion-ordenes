@@ -46,6 +46,10 @@ public class OrdenController {
         }
     }
 
-
+    @PostMapping("/aplicar-descuento-aleatorio")
+    public ResponseEntity<String> aplicarDescuentoAleatorio() {
+        ordenService.seleccionarOrdenesAleatoriasYAplicarDescuento();
+        return ResponseEntity.ok("✅ Descuentos aplicados a órdenes seleccionadas aleatoriamente.");
+    }
 
 }

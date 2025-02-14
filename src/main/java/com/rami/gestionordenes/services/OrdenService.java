@@ -3,6 +3,7 @@ package com.rami.gestionordenes.services;
 import com.rami.gestionordenes.models.DetalleOrden;
 import com.rami.gestionordenes.models.Orden;
 import com.rami.gestionordenes.models.Producto;
+import com.rami.gestionordenes.models.Usuario;
 import com.rami.gestionordenes.repositories.DetalleOrdenRepository;
 import com.rami.gestionordenes.repositories.OrdenRepository;
 import com.rami.gestionordenes.repositories.ProductoRepository;
@@ -13,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class OrdenService {
@@ -85,4 +89,45 @@ public class OrdenService {
     public void eliminarOrden(Long id) {
         ordenRepository.deleteById(id);
     }
+
+    /**
+     * Selecciona órdenes pendientes aleatoriamente y les aplica descuentos según las reglas.
+     */
+    public void seleccionarOrdenesAleatoriasYAplicarDescuento() {
+        List<Orden> ordenesPendientes = ordenRepository.findByEstado("Pendiente");
+
+        if (ordenesPendientes.isEmpty()) {
+            logger.info("❌ No hay órdenes en estado 'Pendiente' para procesar.");
+            return;
+        }
+
+        // 🔥 Barajar la lista para elegir aleatoriamente
+        Collections.shuffle(ordenesPendientes, new Random());
+
+        // 🔥 Obtener el Top 5 de clientes frecuentes
+        List<Usuario> clientesFrecuentes = ordenRepository.findTop5ClientesFrecuentes();
+
+        // 🔥 Aplicar descuentos a las órdenes seleccionadas
+        for (Orden orden : ordenesPendientes) {
+            LocalDateTime localDateTime = orden.getFechaCreacion().toInstant()
+                    .atZone(ZoneId.systemDefault()) // Usa la zona horaria del sistema
+                    .toLocalDateTime();
+            if (descuentoService.aplicarDescuento(localDateTime)) {
+                double descuentoBase = 0.50; // 🔥 50% de descuento por promoción
+                if (clientesFrecuentes.contains(orden.getUsuario())) {
+                    descuentoBase += 0.05; // 🔥 5% extra si es cliente frecuente (Total 55%)
+                }
+
+                double totalOriginal = orden.getTotal();
+                double descuento = totalOriginal * descuentoBase;
+                orden.setTotal(totalOriginal - descuento);
+
+                logger.info("🎯 Orden ID={} seleccionada para descuento. Descuento aplicado: {}%",
+                        orden.getId(), descuentoBase * 100);
+
+                ordenRepository.save(orden);
+            }
+        }
+    }
+
 }
