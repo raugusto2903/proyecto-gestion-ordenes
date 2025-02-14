@@ -1,6 +1,7 @@
 package com.rami.gestionordenes.controllers;
 
 import com.rami.gestionordenes.models.Producto;
+import com.rami.gestionordenes.models.viewmodels.ProductoMasVendidoDTO;
 import com.rami.gestionordenes.services.ProductoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -65,4 +66,12 @@ public class ProductoController {
     public List<Producto> obtenerPorCategoria(@RequestParam String categoria) {
         return productoService.listarPorCategoria(categoria);
     }
+
+    // Obtener los productos más vendidos
+    @GetMapping("/mas-vendidos")
+    public ResponseEntity<List<ProductoMasVendidoDTO>> obtenerProductosMasVendidos() {
+        List<ProductoMasVendidoDTO> productosMasVendidos = productoService.obtenerProductosMasVendidos();
+        return ResponseEntity.ok(productosMasVendidos);
+    }
+
 }

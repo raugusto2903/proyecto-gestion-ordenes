@@ -1,15 +1,22 @@
 package com.rami.gestionordenes.services;
 
 import com.rami.gestionordenes.models.Producto;
+import com.rami.gestionordenes.models.viewmodels.ProductoMasVendidoDTO;
+import com.rami.gestionordenes.repositories.DetalleOrdenRepository;
 import com.rami.gestionordenes.repositories.ProductoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductoService {
+    @Autowired
     private final ProductoRepository productoRepository;
+    @Autowired
+    private DetalleOrdenRepository detalleOrdenRepository;
 
     public ProductoService(ProductoRepository productoRepository) {
         this.productoRepository = productoRepository;
@@ -52,5 +59,14 @@ public class ProductoService {
 
     public List<Producto> listarPorCategoria(String categoria) {
         return productoRepository.findByCategoriaIgnoreCase(categoria);
+    }
+
+    public List<ProductoMasVendidoDTO> obtenerProductosMasVendidos() {
+        List<Object[]> resultados = detalleOrdenRepository.findTopSellingProducts();
+
+        return resultados.stream().map(obj -> new ProductoMasVendidoDTO(
+                (Producto) obj[0],
+                ((Number) obj[1]).intValue()
+        )).collect(Collectors.toList());
     }
 }
