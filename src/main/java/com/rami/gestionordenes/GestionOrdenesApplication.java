@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EntityScan({
-        "com.rami.gestionordenes.models"
+        "com.rami.gestionordenes.models",
+        "com.rami.gestionordenes.auditoria"
 })
 @EnableJpaRepositories({
         "com.rami.gestionordenes.repositories"

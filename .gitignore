@@ -31,3 +31,22 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Carpetas de compilación
+target/
+bin/
+out/
+
+# Configuración IDEs
+.idea/
+*.iml
+*.class
+
+# Configuración del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos sensibles
+*.log
+.env
+application.properties
