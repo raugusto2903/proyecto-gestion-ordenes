@@ -14,15 +14,22 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  onSubmit() {
-    this.authService.login(this.email, this.password).subscribe(
-      response => {
+  async onSubmit() {
+    try {
+      const response = await this.authService.login(this.email, this.password);
+      console.log('Autenticación exitosa:', response);
+      
+      if (response && response.token) {
         localStorage.setItem('token', response.token);
         this.router.navigate(['/dashboard']);
-      },
-      error => {
-        this.errorMessage = 'Credenciales incorrectas';
+      } else {
+        this.errorMessage = 'Respuesta inesperada del servidor';
       }
-    );
+    } catch (error) {
+      console.error('Error en la autenticación:', error);
+      this.errorMessage = 'Credenciales incorrectas';
+    }
   }
+  
+  
 }

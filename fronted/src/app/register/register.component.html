@@ -1,7 +1,11 @@
 <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="card p-4 shadow-lg" style="width: 400px;">
-      <h3 class="text-center mb-3">Iniciar Sesión</h3>
-      <form (ngSubmit)="onSubmit()">
+      <h3 class="text-center mb-3">Registro</h3>
+      <form (ngSubmit)="onRegister()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre</label>
+          <input type="text" id="name" class="form-control" [(ngModel)]="name" name="name" required>
+        </div>
         <div class="mb-3">
           <label for="email" class="form-label">Correo Electrónico</label>
           <input type="email" id="email" class="form-control" [(ngModel)]="email" name="email" required>
@@ -10,14 +14,14 @@
           <label for="password" class="form-label">Contraseña</label>
           <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" required>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+        <button type="submit" class="btn btn-success w-100">Registrarse</button>
+        <div class="testx-center text-success mt-4 mx-auto w-50">
+            {{successMessage}}
+        </div>
       </form>
       <p class="text-center mt-3">
-        ¿No tienes una cuenta? <a routerLink="/register" class="text-primary">Regístrate aquí</a>
+        ¿Ya tienes una cuenta? <a routerLink="/" class="text-primary">Inicia sesión aquí</a>
       </p>
-      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
-        {{ errorMessage }}
-      </div>
     </div>
   </div>
   
