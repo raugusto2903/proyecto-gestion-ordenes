@@ -16,6 +16,6 @@ export class InventarioService {
   }
 
   updateInventario(id: number, data: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/actualizar/${id}`, data);
+    return this.http.put<any>(`${this.apiUrl}/${id}`, data);
   }
 }

@@ -11,7 +11,8 @@ import { InventarioComponent } from './inventario/inventario.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OrdenesComponent } from './ordenes/ordenes.component';
 import { UsersComponent } from './users/users.component';
-import { OrderFormComponent } from './order-form/order-form.component';  // ✅ Importa ReactiveFormsModule
+import { OrderFormComponent } from './order-form/order-form.component';
+import { CrearproductoComponent } from './crearproducto/crearproducto.component';  // ✅ Importa ReactiveFormsModule
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +22,8 @@ import { OrderFormComponent } from './order-form/order-form.component';  // ✅ 
     InventarioComponent,
     OrdenesComponent,
     UsersComponent,
-    OrderFormComponent
+    OrderFormComponent,
+    CrearproductoComponent
   ],
   imports: [
     BrowserModule,

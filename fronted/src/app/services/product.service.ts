@@ -48,4 +48,10 @@ export class ProductService {
     );
   }
 
+  getProductosSinInventario(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/sin-inventario`);
+  }
+  addProducto(producto: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}`, producto);
+  }
 }

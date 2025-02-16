@@ -7,15 +7,17 @@ import { InventarioComponent } from './inventario/inventario.component';
 import { OrdenesComponent } from './ordenes/ordenes.component';
 import { AuthGuardService } from './services/auth.guard.service';
 import { UsersComponent } from './users/users.component'
+import { CrearproductoComponent } from './crearproducto/crearproducto.component'
 
 
 const routes: Routes = [
   { path: '', component: LoginComponent }, // Login por defecto
   { path: 'register', component: RegisterComponent }, // Página de registro
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService]  },
-  { path: 'inventario', component: InventarioComponent },
+  { path: 'inventario', component: InventarioComponent, canActivate: [AuthGuardService]  },
   { path: 'ordenes', component: OrdenesComponent, canActivate: [AuthGuardService] },
   { path: 'usuarios', component: UsersComponent, canActivate: [AuthGuardService] },
+  { path: 'crear-producto', component: CrearproductoComponent, canActivate: [AuthGuardService] },
   { path: '**', redirectTo: '' } // Redirige cualquier ruta desconocida al login
 ];
 
