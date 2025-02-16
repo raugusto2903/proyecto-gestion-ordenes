@@ -55,6 +55,7 @@ export class InventarioComponent implements OnInit{
   }
 
   actualizarInventario(id: number, cantidad: number): void {
+    console.log("id: " + id +","+cantidad)
     this.inventarioService.updateInventario(id, { cantidadDisponible: cantidad }).subscribe(
       () => this.obtenerInventarios(),
       (error) => console.error('Error al actualizar inventario', error)

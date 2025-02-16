@@ -1,1 +1,46 @@
-<p>order-form works!</p>
+<div class="container mt-4">
+    <h2 class="text-center">Crear Orden</h2>
+    
+    <form [formGroup]="orderForm" (ngSubmit)="submitOrder()">
+        <div formGroupName="usuario">
+            <label for="usuario" class="form-label">Usuario</label>
+            <input type="text" id="usuario" class="form-control" formControlName="idUsuario" [attr.disabled]="true">
+          </div>
+          
+      
+      <div class="mb-3">
+        <h4>Detalles de la Orden</h4>
+        <div formArrayName="detalles">
+            <div *ngFor="let detalle of detalles.controls; let i = index" [formGroupName]="i" class="card p-3 mb-2">
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="form-label">Producto</label>
+                  <input type="text" class="form-control" [value]="detalle.value.producto.nombre" disabled>
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Cantidad</label>
+                  <input type="number" class="form-control" formControlName="cantidad" (input)="updateSubtotal(i)">
+
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Precio Unitario</label>
+                  <input type="text" class="form-control" [value]="detalle.value.precioUnitario" disabled>
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Subtotal</label>
+                  <input type="text" class="form-control"  formControlName="subtotal" [attr.disabled]="true">
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      
+      <div class="mb-3">
+        <label for="total" class="form-label">Total</label>
+        <input type="text" id="total" class="form-control" formControlName="total" >
+      </div>
+      
+      <button type="submit" class="btn btn-primary w-100">Generar Orden</button>
+    </form>
+  </div>
+  

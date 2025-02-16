@@ -1,6 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { AuthService } from '../services/auth.service';
+import { OrderFormComponent } from '../order-form/order-form.component';
 @Component({
   selector: 'app-dashboard',
   templateUrl:'./dashboard.component.html',
@@ -15,8 +16,10 @@ export class DashboardComponent implements OnInit{
   products: any[] = []; // Lista de productos
   selectedProduct: any = null;
   userId: number = 0; // Variable para almacenar el userId
-
-  constructor(private productService: ProductService, private authService: AuthService) {}
+  showOrderForm: boolean = false;
+ 
+  constructor(private productService: ProductService, private authService: AuthService) {
+  }
 
   ngOnInit() {
     this.loadProducts();
@@ -68,8 +71,14 @@ export class DashboardComponent implements OnInit{
     }
   }
 
+  
+
   selectProduct(product: any) {
     this.selectedProduct = { ...product, userId: this.userId };
-    console.log('Producto seleccionado con userId:', this.selectedProduct);
+    if(this.selectedProduct.userId > 0){
+      this.showOrderForm = true;
+    }
+   // 🔥 Asegura que esta línea se ejecuta
+    console.log('Producto seleccionado con userId:', this.selectedProduct, 'showOrderForm:', this.showOrderForm);
   }
 }

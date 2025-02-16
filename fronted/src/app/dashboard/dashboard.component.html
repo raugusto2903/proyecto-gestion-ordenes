@@ -64,5 +64,5 @@
   <div *ngIf="products.length === 0 && criterioSeleccionado" class="alert alert-warning mt-4">
     No se encontraron productos con el criterio seleccionado.
   </div>
-  <app-order-form *ngIf="selectedProduct" [product]="selectedProduct"></app-order-form>
+  <app-order-form *ngIf="showOrderForm" [product]="selectedProduct"  (closeForm)="showOrderForm = false"></app-order-form>
 </div>

@@ -32,4 +32,7 @@ export class OrdenesService {
   getOrdenes(): Observable<Orden[]> {
     return this.http.get<Orden[]>(this.apiUrl);
   }
+  createOrder(orderData: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, orderData);
+  }
 }
