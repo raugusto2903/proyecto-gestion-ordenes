@@ -1,18 +1,68 @@
 <div class="container mt-4">
-    <h2 class="text-center">Dashboard de Productos</h2>
-  
-    <div class="row">
-      <div class="col-md-4" *ngFor="let product of products">
-        <div class="card mb-4">
-          <img [src]="product.image" class="card-img-top" alt="{{ product.nombre }}">
-          <div class="card-body">
-            <h5 class="card-title">{{ product.nombre }}</h5>
-            <p class="card-text">{{ product.descripcion }}</p>
-            <p class="card-text"><strong>Precio:</strong> ${{ product.precio }}</p>
-            <button class="btn btn-primary">Comprar</button>
-          </div>
-        </div>
-      </div>
+  <h2 class="text-center">Buscar Productos</h2>
+
+  <p *ngIf="!criterioSeleccionado" class="text-muted">
+    Mostrando todos los productos disponibles.
+  </p>
+
+  <!-- Selector de criterio de búsqueda -->
+  <div class="mb-3">
+    <label for="criterio"><strong>Seleccione un criterio:</strong></label>
+    <select id="criterio" class="form-control" [(ngModel)]="criterioSeleccionado">
+      <option value="">-- Seleccione --</option>
+      <option value="nombre">Buscar por Nombre</option>
+      <option value="rango-precio">Buscar por Rango de Precios</option>
+      <option value="categoria">Buscar por Categoría</option>
+      <option value="mas-vendidos">Los más vendidos</option>
+    </select>
+  </div>
+
+  <!-- Input para buscar por nombre -->
+  <div *ngIf="criterioSeleccionado === 'nombre'" class="mb-3">
+    <label for="nombre">Nombre del Producto:</label>
+    <input id="nombre" class="form-control" type="text" [(ngModel)]="nombre" placeholder="Ingrese el nombre o parte del nombre" />
+  </div>
+
+  <!-- Inputs para buscar por rango de precio -->
+  <div *ngIf="criterioSeleccionado === 'rango-precio'" class="mb-3 row">
+    <div class="col">
+      <label for="precioMin">Precio Mínimo:</label>
+      <input id="precioMin" class="form-control" type="number" [(ngModel)]="precioMin" placeholder="Ej. 100" />
+    </div>
+    <div class="col">
+      <label for="precioMax">Precio Máximo:</label>
+      <input id="precioMax" class="form-control" type="number" [(ngModel)]="precioMax" placeholder="Ej. 500" />
     </div>
   </div>
-  
+
+  <!-- Input para buscar por categoría -->
+  <div *ngIf="criterioSeleccionado === 'categoria'" class="mb-3">
+    <label for="categoria">Categoría:</label>
+    <input id="categoria" class="form-control" type="text" [(ngModel)]="categoria" placeholder="Ej. Electrónica, Ropa..." />
+  </div>
+
+  <!-- Botón para realizar la búsqueda -->
+  <button class="btn btn-primary w-100" (click)="buscar()">Buscar</button>
+
+  <hr />
+
+  <!-- Mostrar resultados -->
+  <div *ngIf="products.length > 0" class="mt-4">
+    <h3>Resultados:</h3>
+    <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let producto of products">
+        <div>
+          <strong>{{ producto.nombre }}</strong> - ${{ producto.precio }}
+          <p class="mb-0"><small>Categoría: {{ producto.categoria }}</small></p>
+        </div>
+        <button class="btn btn-success btn-sm" (click)="selectProduct(producto)">Agregar a la orden</button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Mensaje si no hay resultados -->
+  <div *ngIf="products.length === 0 && criterioSeleccionado" class="alert alert-warning mt-4">
+    No se encontraron productos con el criterio seleccionado.
+  </div>
+  <app-order-form *ngIf="selectedProduct" [product]="selectedProduct"></app-order-form>
+</div>

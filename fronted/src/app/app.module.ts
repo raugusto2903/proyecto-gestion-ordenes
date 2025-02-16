@@ -8,14 +8,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { InventarioComponent } from './inventario/inventario.component';
-import { ReactiveFormsModule } from '@angular/forms';  // ✅ Importa ReactiveFormsModule
+import { ReactiveFormsModule } from '@angular/forms';
+import { OrdenesComponent } from './ordenes/ordenes.component';
+import { UsersComponent } from './users/users.component';
+import { OrderFormComponent } from './order-form/order-form.component';  // ✅ Importa ReactiveFormsModule
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    InventarioComponent
+    InventarioComponent,
+    OrdenesComponent,
+    UsersComponent,
+    OrderFormComponent
   ],
   imports: [
     BrowserModule,

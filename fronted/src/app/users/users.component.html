@@ -1,0 +1,36 @@
+<div class="container mt-4">
+  <h2>Lista de Usuarios</h2>
+
+  <!-- Botón para alternar entre todos los usuarios y clientes frecuentes -->
+  <button class="btn btn-primary mb-3" (click)="fetchClientesFrecuentes()" *ngIf="!mostrandoFrecuentes">
+    Mostrar Clientes Frecuentes
+  </button>
+  <button class="btn btn-secondary mb-3" (click)="fetchUsers()" *ngIf="mostrandoFrecuentes">
+    Mostrar Todos los Usuarios
+  </button>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Usuario</th>
+        <th>Email</th>
+        <th>Estado</th>
+        <th>Admin</th>
+        <th>Creado</th>
+        <th>Órdenes</th> <!-- Nueva columna -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.idUsuario }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.enabled ? 'Activo' : 'Inactivo' }}</td>
+        <td>{{ user.isAdmin ? 'Sí' : 'No' }}</td>
+        <td>{{ user.createdAt | date:'short' }}</td>
+        <td>{{ user.cantidadOrdenes }}</td> <!-- Muestra la cantidad de órdenes -->
+      </tr>
+    </tbody>
+  </table>
+</div>

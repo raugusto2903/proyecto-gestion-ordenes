@@ -9,7 +9,8 @@ import { Router, NavigationEnd } from '@angular/router'
 })
 export class AppComponent implements OnInit{
   isLoggedIn: boolean = false;
- 
+  userName: string | null = null;
+  userId: number = 0;
   constructor(private authService: AuthService, private router: Router) {
     console.log('Estado de isLoggedIn:', this.isLoggedIn);
   }
@@ -18,7 +19,6 @@ export class AppComponent implements OnInit{
   
   ngOnInit() {
     this.checkLoginStatus(); // ✅ Verifica el estado al iniciar
-
     // ✅ Detecta cambios de ruta y vuelve a ejecutar `checkLoginStatus`
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -29,7 +29,10 @@ export class AppComponent implements OnInit{
 
   checkLoginStatus() {
     this.isLoggedIn = this.authService.isLoggedIn();
-    console.log('Estado de isLoggedIn después del cambio de ruta:', this.isLoggedIn);
+    if (this.isLoggedIn) {
+      this.userName = this.authService.username;
+      this.userId = this.authService.id;
+    }
   }
 
   logout() {
